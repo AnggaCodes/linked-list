@@ -60,7 +60,7 @@ class LinkedList:
         if not temp: # Cek list kosong
             print("List masih kosong") 
             return
-        print("\n==================== Data Nilai Mahasiswa ====================")
+        print("\n======================= Data Nilai Mahasiswa =======================")
         while temp: # Selama ada orang
             d = temp.data
             print(f"Nama: {d['nama']} | Nilai_Akhir: {d['nilai_akhir']} | Grade: {d['grade']} | {d['status']}") 

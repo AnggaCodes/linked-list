@@ -1,77 +1,80 @@
 class Node:
     def __init__(self, nama, uts, uas):
 
-        akhir = (uts + uas) / 2
-        grade = "A" if akhir >= 80 else "B" if akhir >= 70 else "C" if akhir >= 60 else "D" if akhir >= 40 else "E"
-        status = "Lulus" if grade in ["A", "B", "C"] else "Tidak Lulus"
+        nilai_akhir = (uts + uas) / 2
+        grade = "A" if nilai_akhir >= 80 else "B" if nilai_akhir >= 70 else "C" if nilai_akhir >= 60 else "D" if nilai_akhir >= 50 else "E"
+        status = "Lulus (Sangat Memuaskan)" if grade == "A" else "Lulus (Baik)" if grade == "B" else "Lulus (Cukup)" if grade == "C" else "Lulus Bersyarat / Remedial" if grade == "D" else "Tidak Lulus"
 
-        # Semua info dibungkus jadi satu di self.data [cite: 122]
+        # Semua info dibungkus jadi satu di self.data
         self.data = {
             "nama": nama, "uts": uts, "uas": uas,
-            "akhir": akhir, "grade": grade, "status": status
+            "nilai_akhir": nilai_akhir, "grade": grade, "status": status
         }
-        self.next = None # Tangan kanan (pointer) kosong di awal [cite: 123, 124]
+        self.next = None # Tangan kanan (pointer) kosong di awal
 
 class LinkedList:
     def __init__(self):
-        self.head = None # Papan penunjuk awal [cite: 131]
+        self.head = None # Papan penunjuk awal 
 
-    # 1. INSERT DEPAN (Kelompok 1) [cite: 135]
+    # 1. INSERT DEPAN
     def insert_depan(self, nama, uts, uas):
         baru = Node(nama, uts, uas)
-        if self.head is None: # Cek list kosong [cite: 137]
+        if self.head is None: # Cek list kosong 
             self.head = baru 
         else:
-            baru.next = self.head # Orang baru pegang orang yang ditunjuk head [cite: 140]
-            self.head = baru # Head pindah nunjuk ke orang baru [cite: 141]
+            baru.next = self.head # Orang baru pegang orang yang ditunjuk head
+            self.head = baru # Head pindah nunjuk ke orang baru
 
-    # 2. INSERT BELAKANG (Kelompok 2) [cite: 149]
+    # 2. INSERT BELAKANG 
     def insert_belakang(self, nama, uts, uas):
         baru = Node(nama, uts, uas)
         if self.head is None: 
             self.head = baru 
             return
         temp = self.head
-        while temp.next: # Traversal nyari ujung [cite: 156]
+        while temp.next: # Traversal nyari ujung
             temp = temp.next 
-        temp.next = baru # Sambungin di akhir [cite: 158]
+        temp.next = baru # Sambungin di akhir
 
-    # 3. FIND / CARI (Kelompok 2) 
+    # 3. FIND / CARI 
     def cari_mahasiswa(self, nama_target):
-        temp = self.head # Mulai dari depan [cite: 161]
+        temp = self.head # Mulai dari depan
         while temp: 
-            if temp.data["nama"] == nama_target: # Cek kondisi target [cite: 163]
-                return temp.data # Ditemukan [cite: 164]
+            if temp.data["nama"] == nama_target: # Cek kondisi target 
+                return temp.data # Ditemukan 
             temp = temp.next 
-        return None # Tidak ditemukan [cite: 167]
+        return None # Tidak ditemukan
 
-    # 4. REMOVE DEPAN (Kelompok 3) [cite: 174]
+    # 4. REMOVE DEPAN 
     def hapus_depan(self):
-        if self.head is None: # Cek list kosong [cite: 176]
+        if self.head is None: # Cek list kosong
             print("Gak ada yang dihapus, list kosong!")
             return
-        hapus = self.head # Simpan node yang mau dihapus [cite: 179]
+        hapus = self.head # Simpan node yang mau dihapus 
         self.head = self.head.next # Geser head ke orang berikutnya 
-        del hapus # Hapus dari memori [cite: 181]
+        del hapus # Hapus dari memori 
 
-    # 5. TAMPILKAN / TRAVERSAL (Kelompok 1-5 wajib bisa) [cite: 191]
+    # 5. TAMPILKAN / TRAVERSAL
     def tampilkan(self):
         temp = self.head
-        if not temp: # Cek list kosong [cite: 132]
+        if not temp: # Cek list kosong
             print("List masih kosong") 
             return
-        print("\n=========== Data Nilai Mahasiswa ===========")
-        while temp: # Selama ada orang [cite: 193]
+        print("\n==================== Data Nilai Mahasiswa ====================")
+        while temp: # Selama ada orang
             d = temp.data
-            print(f"Nama: {d['nama']} | Akhir: {d['akhir']} | Grade: {d['grade']} | {d['status']}") 
-            temp = temp.next # Pindah ke orang berikutnya [cite: 195]
+            print(f"Nama: {d['nama']} | Nilai_Akhir: {d['nilai_akhir']} | Grade: {d['grade']} | {d['status']}") 
+            temp = temp.next # Pindah ke orang berikutnya
 
 gas = LinkedList()
 gas.insert_depan("Angga", 80, 80)
-gas.insert_belakang("Budi", 70, 75)
-gas.insert_belakang("Budi", 70, 75)
+gas.insert_belakang("Abdul", 70, 75)
+gas.insert_belakang("Satria", 70, 65)
+
 gas.tampilkan()
+hapus_depan = gas.hapus_depan()
+print ("\nHapus data paling depan")
 
 # Coba cari
-hasil = gas.cari_mahasiswa("Angga")
-print(f"\nHasil Cari: {hasil}")
+hasil = gas.cari_mahasiswa("Abdul")
+print(f"\nCari Data : {hasil}")

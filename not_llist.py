@@ -1,34 +1,39 @@
 # Program Menghitung Nilai Akhir dari UTS dan UAS
-print("=== Sistem Penilaian Mahasiswa ===")
 
-nama = input("Nama Mahasiswa: ")
-uts = float(input("Nilai UTS: "))
-uas = float(input("Nilai UAS: "))
+# Membuat list of dictionaries
+data_mahasiswa = [
+    {"nama": "Angga", "uts": 80, "uas": 80},
+    {"nama": "Abdul", "uts": 70, "uas": 75},
+    {"nama": "Satria", "uts": 70, "uas": 65}
+]
 
-# Menghitung Rata-rata
-nilai_akhir = (uts + uas) / 2
-
-# Logika Penentuan Grade (Skala Umum Kampus)
-if nilai_akhir >= 80:
-    grade = "A"
-    status = "Lulus (Sangat Memuaskan)"
-elif nilai_akhir >= 70:
-    grade = "B"
-    status = "Lulus (Baik)"
-elif nilai_akhir >= 60:
-    grade = "C"
-    status = "Lulus (Cukup)"
-elif nilai_akhir >= 50:
-    grade = "D"
-    status = "Lulus Bersyarat / Remedial"
-else:
-    grade = "E"
-    status = "Tidak Lulus"
+# Menghitung Nilai Akhir dan Grade untuk setiap mahasiswa
+for mhs in data_mahasiswa:
+    nilai_akhir = (mhs['uts'] + mhs['uas']) / 2
+    mhs['nilai_akhir'] = nilai_akhir
+    
+    # Logika Penentuan Grade (Skala Umum Kampus)
+    if nilai_akhir >= 80:
+        mhs['grade'] = "A"
+        mhs['status'] = "Lulus (Sangat Memuaskan)"
+    elif nilai_akhir >= 70:
+        mhs['grade'] = "B"
+        mhs['status'] = "Lulus (Baik)"
+    elif nilai_akhir >= 60:
+        mhs['grade'] = "C"
+        mhs['status'] = "Lulus (Cukup)"
+    elif nilai_akhir >= 50:
+        mhs['grade'] = "D"
+        mhs['status'] = "Lulus Bersyarat / Remedial"
+    else:
+        mhs['grade'] = "E"
+        mhs['status'] = "Tidak Lulus"
 
 # Menampilkan Hasil
-print("-" * 35)
-print(f"Mahasiswa: {nama}")
-print(f"Skor Akhir: {nilai_akhir}")
-print(f"Grade: {grade}")
-print(f"Status: {status}")
-print("-" * 35)
+print("\n======================= Data Nilai Mahasiswa =======================")
+for mhs in data_mahasiswa:
+    print(f"Nama: {mhs['nama']} | Nilai_Akhir: {mhs['nilai_akhir']} | Grade: {mhs['grade']} | {mhs['status']}")
+hapus_depan = data_mahasiswa.pop(0)
+print(f"\nHapus data paling depan")
+
+print(f"\nCari Data : {data_mahasiswa[0]}")
